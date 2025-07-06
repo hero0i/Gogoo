@@ -1,28 +1,29 @@
-workflows: # يجب أن تبدأ هذه الكلمة من أقصى يسار السطر بدون أي مسافات بادئة
-  build-apk:
-    name: Build APK
-    max_build_duration: 15 # دقيقة
+workflows:
+  build-android-release:
+    name: Build Android Release APK
+    max_build_duration: 30
+
     environment:
-      # بما أن هذا ليس مشروع Flutter، لا تحتاج لـ flutter: stable هنا.
-      # إذا كنت تبني تطبيق React Native، قد تحتاج لتحديد إصدار Node.js
-      node: 16 # على سبيل المثال، أو الإصدار الذي تستخدمه لمشروعك
+      node: 16
+
     scripts:
-      - name: Get dependencies # جلب التبعيات
+      - name: Get dependencies
         script: |
-          # إذا كنت تستخدم npm
           npm install
-          # أو إذا كنت تستخدم yarn، قم بإلغاء التعليق عن السطر التالي والتعليق على npm install
-          # yarn install
-      - name: Build app (مثال لـ React Native) # بناء التطبيق
+
+      - name: Build Android Release APK
         script: |
-          # مثال: بناء APK لتطبيق React Native باستخدام Metro
-          # npx react-native build-android --mode=release
-          # أو إذا كان مشروع Expo، استخدم الأمر المناسب مثل:
-          # eas build --platform android --profile production
-          # تأكد من استبدال هذا السطر بأمر البناء الفعلي لمشروعك React Native/Expo.
+          npx react-native build-android --mode=release
+
     artifacts:
-      # ستحتاج إلى تحديد مسار ملف APK الصحيح لمشروعك
-      # مثلاً لـ React Native:
-      # - android/app/build/outputs/apk/release/app-release.apk
-      # أو لـ Expo:
-      # - dist/*.apk
+      - android/app/build/outputs/apk/release/app-release.apk
+
+    # publishing:
+      # email:
+      #   recipients:
+      #     - your_email@example.com
+      # google_play:
+      #   credentials: ENCRYPTED_GOOGLE_PLAY_CREDENTIALS
+      #   track: alpha
+      #   json_key: $GOOGLE_PLAY_JSON_KEY
+      #   track_upload_release_file: true
