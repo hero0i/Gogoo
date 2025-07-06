@@ -1,29 +1,15 @@
 workflows:
-  build-android-release:
-    name: Build Android Release APK
-    max_build_duration: 30
-
+  build-apk:
+    name: Build APK
+    max_build_duration: 15
     environment:
-      node: 16
-
+      flutter: stable
     scripts:
       - name: Get dependencies
         script: |
-          npm install
-
-      - name: Build Android Release APK
+          flutter pub get
+      - name: Build release APK
         script: |
-          npx react-native build-android --mode=release
-
+          flutter build apk --release
     artifacts:
-      - android/app/build/outputs/apk/release/app-release.apk
-
-    # publishing:
-      # email:
-      #   recipients:
-      #     - your_email@example.com
-      # google_play:
-      #   credentials: ENCRYPTED_GOOGLE_PLAY_CREDENTIALS
-      #   track: alpha
-      #   json_key: $GOOGLE_PLAY_JSON_KEY
-      #   track_upload_release_file: true
+      - build/app/outputs/flutter-apk/app-release.apk
