@@ -1,15 +1,28 @@
-workflows:
+Workflows:
   build-apk:
     name: Build APK
     max_build_duration: 15
+    # لا تحتاج إلى flutter: stable هنا إذا لم يكن مشروع Flutter
+    # إذا كنت تبني تطبيق React Native، قد تحتاج إلى node: <version>
     environment:
-      flutter: stable
+      # على سبيل المثال، لتحديد إصدار Node.js
+      node: 16 # أو الإصدار الذي تستخدمه لمشروعك
     scripts:
       - name: Get dependencies
         script: |
-          flutter pub get
-      - name: Build release APK
+          # استخدم npm install إذا كنت تستخدم npm
+          npm install
+          # أو استخدم yarn install إذا كنت تستخدم yarn
+          # yarn install
+      - name: Build app (مثال لـ React Native)
         script: |
-          flutter build apk --release
+          # مثال: بناء APK لتطبيق React Native باستخدام Metro
+          # npx react-native build-android --mode=release
+          # أو إذا كان مشروع Expo
+          # eas build --platform android --profile production
     artifacts:
-      - build/app/outputs/flutter-apk/app-release.apk
+      # ستحتاج إلى تحديد مسار ملف APK الصحيح لمشروعك
+      # مثلاً لـ React Native:
+      # - android/app/build/outputs/apk/release/app-release.apk
+      # أو لـ Expo:
+      # - dist/*.apk
